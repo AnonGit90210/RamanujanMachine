@@ -61,16 +61,16 @@ def main(config_file='config.ini'):
         setattr(params, config_variable, config[config_variable])
         print('%s is set up to %s ' % (config_variable, getattr(params, config_variable)))
     print('\n-------------------------------------------------------\n')
-    gen_real_feig_const = partial(gen_feig_consts, params.i)
-    gen_percolation_const = partial(gen_percolation_consts, params.i)
-    gen_zeta_const = partial(gen_zeta_consts, params.i)
+    gen_feig_const_indexed = partial(gen_feig_consts, i=params.i)
+    gen_percolation_const_indexed = partial(gen_percolation_consts, i=params.i)
+    gen_zeta_const_indexed = partial(gen_zeta_consts, i=params.i)
 
     consts_generators = {'e': gen_e_const,
                          'pi': gen_pi_const,
-                         'feig': gen_real_feig_const,
+                         'feig': gen_feig_const_indexed,
                          'euler_masch': gen_euler_masch_const,
-                         'percolation': gen_percolation_const,
-                         'zeta': gen_zeta_const,
+                         'percolation': gen_percolation_const_indexed,
+                         'zeta': gen_zeta_const_indexed,
                          'phi': gen_phi_const,
                          'apery': gen_apery_const}
     if params.const in consts_generators:
@@ -85,9 +85,11 @@ def main(config_file='config.ini'):
 
     measure_runtime = MeasureRuntime()
     if params.const == 'feig':
-        params.const = 'feig, %d' % i
+        params.const = 'feig, %d' % params.i
     if params.const == 'percolation':
-        params.const = 'percolation, %d' % i
+        params.const = 'percolation, %d' % params.i
+    if params.const == 'zeta':
+        params.const = 'zeta, %d' % params.i
 
     # Either loads the hashtable from previous runs or loads it
     measure_runtime.start_measure()

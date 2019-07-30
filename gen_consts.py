@@ -71,7 +71,13 @@ def set_precision_decor(func):
     @wraps(func)
     def wrapper(prec=None, *args, **kwargs):
         set_precision(prec)
-        return func(*args, **kwargs)
+        try:
+            return func(*args, **kwargs)
+        except (IndexError, KeyError):
+            print("Invalid constant index 'i'.\nPlease check which values are supported in 'gen_consts.py' and fix the configuration file.")
+            print(kwargs)
+            raise
+            
 
     return wrapper
 
