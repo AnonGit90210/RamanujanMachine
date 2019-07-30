@@ -33,6 +33,8 @@ There are a few examples & sanitycheck configurations in tests\fixtures, e.g.:
 ```
 python main.py apery_sanitycheck_config.ini
 ```
+Note: while generating/expanding the hashtable, the target constant is saved and used when the hashtable is loaded (with 'use' setting). There's a fault-safe mechanism in the logic behind it, as the result clicks are saved to the hashtable file as well.
+*If you wish to use the hashtable with a different constant*, run it once with 'expand' operation over the *new constant*, then you can use it for the new constant as usual.
 
 ## General
 
